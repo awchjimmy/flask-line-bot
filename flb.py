@@ -10,6 +10,7 @@ from linebot.exceptions import (
 from linebot.models import (
 	MessageEvent, TextMessage, TextSendMessage,
 )
+import bible
 
 app = Flask(__name__)
 
@@ -39,7 +40,20 @@ def callback():
 
 @handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
+	user_input = event.message.text
+	reply_text = ''
+
+	# starts with one space, query bible, e.g. ' {book} {chapter}'
+	if user_input[0] == ' ':
+		_, book, chapter = user_input.split(' ')
+		reply_text = bible.query(book, int(chapter))
+
+	# normal user input
+	else:
+		reply_text = user_input
+
+	# send reply message
 	line_bot_api.reply_message(
 		event.reply_token,
-		TextSendMessage(text=event.message.text))
+		TextSendMessage(text=reply_text))
 

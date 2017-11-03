@@ -23,11 +23,22 @@ def get_scripture():
 
 	return scripture
 
-def main():
+def query(book, chapter):
+	# get scripture
 	scripture = get_scripture()
 
-	for s in scripture[:50]:
-		print(s)
+	# filter by book and chapter
+	query = list(filter(lambda data: data['book'] == book and data['chapter'] == chapter, scripture))
+
+	# concat the verses
+	text = ''
+	for q in query:
+		text += '{}:{} {}\n'.format(q['chapter'], q['verse'], q['content'])
+
+	return text
+
+def main():
+	print(query('Matt', 13))
 
 if __name__ == '__main__':
 	main()
