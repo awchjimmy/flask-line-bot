@@ -1,6 +1,7 @@
 # flask-line-bot
 
-以聖經當作題材，實作Line Bot．
+以聖經當作題材，實作Line Bot．  
+給它哪卷書、第幾章，它就會回應你對應經節．  
 
 ### Environment Setup
 ```
